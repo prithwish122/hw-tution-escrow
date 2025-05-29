@@ -121,7 +121,7 @@ const escrowAddress= "0x92146cca0FCA743CE512D5B1791668e01eb48963"
       setPendingPayments(pendingPayments.filter((payment: { id: any }) => payment.id !== selectedPayment.id))
 
       // Show success message
-      alert(`Payment ${selectedPayment.id} has been successfully released to ${selectedPayment.university}`)
+      // alert(`Payment ${selectedPayment.id} has been successfully released to ${selectedPayment.university}`)
     } catch (error) {
       console.error("Error releasing payment:", error)
       // alert("Failed to release payment. Please try again.")
@@ -152,10 +152,10 @@ const escrowAddress= "0x92146cca0FCA743CE512D5B1791668e01eb48963"
       setPendingPayments(pendingPayments.filter((payment: { id: any }) => payment.id !== selectedPayment.id))
 
       // Show success message
-      alert(`Payment ${selectedPayment.id} has been successfully refunded to ${selectedPayment.studentName}`)
+      // alert(`Payment ${selectedPayment.id} has been successfully refunded to ${selectedPayment.studentName}`)
     } catch (error) {
       console.error("Error refunding payment:", error)
-      alert("Failed to refund payment. Please try again.")
+      // alert("Failed to refund payment. Please try again.")
     } finally {
       setIsProcessing(false)
       setDialogOpen(false)

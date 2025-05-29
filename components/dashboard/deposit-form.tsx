@@ -17,6 +17,7 @@ import { useAppKitAccount, useAppKitNetwork } from "@reown/appkit/react"
 import { useWriteContract } from "wagmi"
 import escrowABI from "@/contractdetails/escrow_abi.json"
 import usdcABI from "@/contractdetails/usdc.json"
+import { parseUnits } from 'viem';
 
 
 interface University {
@@ -53,14 +54,19 @@ export default function DepositForm(): JSX.Element {
 
  const handleInitiateDeposit = async (invoiceRef: any, address: any, universityAddress: any, amount: any) => { 
   if (!university || !amount || !invoiceRef) return 
-  console.log(invoiceRef, address, universityAddress, amount,"================================================")
+  const amount1 = amount * 1000000
+  console.log(invoiceRef, address, universityAddress, amount1,"================================================")
   try {
+   
+     
+    console.log(amount1)
+    // Convert to smallest unit (assuming USDC has 6 decimals);
     // First contract call
     await writeContract({ 
       abi: escrowABI, 
       functionName: "initializeEscrow", 
       address: escrowAddress, 
-      args: [invoiceRef, address, universityAddress, amount], 
+      args: [invoiceRef, address, universityAddress, amount1], 
     })
 
 
@@ -69,7 +75,7 @@ export default function DepositForm(): JSX.Element {
       abi: usdcABI,
       functionName: "approve",
       address: usdcAddress,
-      args: [escrowAddress, amount], // Assuming the approve function takes the spender address and amount
+      args: [escrowAddress, amount1], // Assuming the approve function takes the spender address and amount
     })
 
     setShowConfirmDialog(true)
