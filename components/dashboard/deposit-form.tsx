@@ -78,31 +78,40 @@ export default function DepositForm(): JSX.Element {
   }
 }
 
-  const handleConfirmDeposit = async (invoiceRef : any) => {
-    console.log("Confirming deposit for invoice:========================================================", invoiceRef)
-    await writeContract({ 
-      abi: escrowABI, 
-      functionName: "deposit", 
-      address: escrowAddress, 
-      args: [invoiceRef], 
-    })
+  const handleConfirmDeposit = async (invoiceRef: any) => {
+  console.log("Confirming deposit for invoice:", invoiceRef);
 
+  await writeContract({
+    abi: escrowABI,
+    functionName: "deposit",
+    address: escrowAddress,
+    args: [invoiceRef],
+  });
 
-    setShowConfirmDialog(false)
-    setIsSubmitting(true)
+  // Simulate saving to "backend" (here: localStorage)
+  const previousDeposits = JSON.parse(localStorage.getItem("deposits") || "[]");
+  const newDeposit = {
+    university: selectedUniversity?.label,
+    amount,
+    invoiceRef,
+    address,
+    timestamp: new Date().toISOString(),
+  };
+  localStorage.setItem("deposits", JSON.stringify([...previousDeposits, newDeposit]));
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+  setShowConfirmDialog(false);
+  setIsSubmitting(true);
 
-    // Reset form
-    setUniversity("")
-    setAmount("")
-    setInvoiceRef("")
-    setIsSubmitting(false)
+  await new Promise((resolve) => setTimeout(resolve, 1500));
 
-    // Show success message or redirect
-    alert("Deposit initiated successfully!")
-  }
+  setUniversity("");
+  setAmount("");
+  setInvoiceRef("");
+  setIsSubmitting(false);
+
+  alert("Deposit initiated successfully!");
+};
+
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault()
