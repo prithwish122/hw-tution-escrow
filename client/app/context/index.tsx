@@ -18,8 +18,8 @@ if (!projectId) {
 
 // Set up metadata
 const metadata = {
-  name: 'Plan Dao',
-  description: 'AppKit Example',
+  name: 'hw',
+  description: 'hw',
   url: 'https://reown.com/appkit', // origin must match your domain & subdomain
   icons: ['https://assets.reown.com/reown-profile-pic.png']
 }
